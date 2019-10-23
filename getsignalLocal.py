@@ -19,8 +19,9 @@ import threading
 import urllib.request
 import pywt
 import random
+from urllib import parse
 
-url = 'http://10.16.202.74:8000/ehealth/?msg_content='
+url = 'https://www.google.com/search?sxsrf='
 
 
 #adapter = pygatt.backends.GATTToolBackend()
@@ -112,19 +113,19 @@ try:
             if scount == 20:
                 sendemg = emgdenoise(emg)
                 ffemgs = emgfft(sendemg)
-                data = 'emg='+ str(sendemg) +'femg='+ str(ffemgs) + 'med='+str(mediafreq(ffemgs)) +'temp='+str(temp)
+                data = {'emg':sendemg,'femg':ffemgs,'med':mediafreq(ffemgs),'temp':temp}
                 scount = scount +1
             elif scount == 40:
                 sendemg = emgdenoise(emg)
-                data = 'emg='+ str(sendemg) +'femg='+ str(ffemgs) + 'med='+str(mediafreq(ffemgs)) + 'plus='+str(plu) +'spo='+str(spo)
+                data = {'emg':sendemg,'femg':ffemgs,'med':mediafreq(ffemgs),'plus':plu,'spo':spo}
                 scount = 0
             else:
                 sendemg = emgdenoise(emg)
                 ffemgs = emgfft(sendemg)
-                data = 'emg='+ str(sendemg) +'femg='+ str(ffemgs) + 'med='+str(mediafreq(ffemgs))
+                data = {'emg':sendemg,'femg':ffemgs,'med':mediafreq(ffemgs)}
                 scount = scount +1
-#           urllib.request.urlopen(url+data)
-            print ("send data is", data)
+            urllib.request.urlopen(url+parse.urlencode(data))
+            print ("send data is", parse.urlencode(data))
             sleep(1)
 
     
