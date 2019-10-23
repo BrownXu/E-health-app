@@ -102,16 +102,16 @@ try:
             if scount == 20:
                 sendemg = emgdenoise(emg)
                 ffemgs = emgfft(sendemg)
-                data = 'emg='+ str(sendemg) +'femg='+ str(ffemgs) + 'med='+str(mediafreq(ffemgs)) +'temp='+str(temp)
+                data = {'emg':sendemg,'femg':ffemgs,'med':mediafreq(ffemgs),'temp':temp}
                 scount = scount +1
             elif scount == 40:
                 sendemg = emgdenoise(emg)
-                data = 'emg='+ str(sendemg) +'femg='+ str(ffemgs) + 'med='+str(mediafreq(ffemgs)) + 'plus='+str(plu) +'spo='+str(spo)
+                data = {'emg':sendemg,'femg':ffemgs,'med':mediafreq(ffemgs),'plus':plu,'spo':spo}
                 scount = 0
             else:
                 sendemg = emgdenoise(emg)
                 ffemgs = emgfft(sendemg)
-                data = 'emg='+ str(sendemg) +'femg='+ str(ffemgs) + 'med='+str(mediafreq(ffemgs))
+                data = {'emg':sendemg,'femg':ffemgs,'med':mediafreq(ffemgs)}
                 scount = scount +1
             urllib.request.urlopen(url+data)
             sleep(1)
